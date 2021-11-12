@@ -109,6 +109,8 @@ I will train the model by only 1 feature `temperature` to predict temperature in
 
 I will use `.plot` built in Dataframe (uni_data)
 
+![Plot to observe termperature's fluctuation by ` plot`](https://user-images.githubusercontent.com/70437668/141437640-d3455cd4-33b5-412d-bbea-50a4c950cc09.jpg)
+
 ## Tranform data type from Dataframe into Numpy Array
 
 ## Normalize the dataset
@@ -224,15 +226,15 @@ Example of data window
 -2.0949220845536356
 ```
 
-
 ## Plot the Trained Model
 
+![Plot the Trained Model](https://user-images.githubusercontent.com/70437668/141437785-5407b721-8f94-416e-913e-7507384fbcee.jpg)
 
 ### Baseline
 
 Before designing the model, I will try to predict the current temperature by calculating an average of the previous 20 time steps (a naive approach).
 
-
+![Baseline](https://user-images.githubusercontent.com/70437668/141437919-eb06743a-2813-45bb-8993-eee2801d9e7e.jpg)
 
 ### Simple RNN versus LSTM
 
@@ -280,7 +282,11 @@ simple_rnn.fit(train_univariate, epochs=10,
 
 I will take 3 patterns in the validation set (val)univariate) to observe how the SimpleRNN model predicted.
 
+![Pattern 1](https://user-images.githubusercontent.com/70437668/141438234-8daf87e8-81f9-49f5-ad39-7274948d431d.jpg)
 
+![Pattern 2](https://user-images.githubusercontent.com/70437668/141438258-ed13938c-26f3-4747-84c7-f9cb214c18e0.jpg)
+
+![Pattern 3](https://user-images.githubusercontent.com/70437668/141438269-290c52af-a29e-4911-8ce9-399af64ff8ad.jpg)
 
 Next, I will replace SimpleRNN layer with LSTM to see if the model could predict more efficiently.
 
@@ -306,23 +312,45 @@ simple_lstm.fit(train_univariate, epochs=10,
 
 Similarly, I will use 3 patterns in the validation set to observer the model's results.
 
+![LSTM Pattern 1](https://user-images.githubusercontent.com/70437668/141438544-4b0492c8-dd8d-4f15-a1df-be3425cd044a.jpg)
+
+![LSTM Pattern 2](https://user-images.githubusercontent.com/70437668/141438553-d8454758-a9a6-469f-8e16-2aebba302400.jpg)
+
+![LSTM Pattern 3](https://user-images.githubusercontent.com/70437668/141438557-a83ee69d-ea02-4251-af11-fe4f10f581ac.jpg)
 
 ## Predict the Time-Series data with multiple variables
 
 I will predict temperature by 3 features: pressure, temperature and air tight.
 
 ```
-
+	p (mbar)	T (degC)	rho (g/m**3)
+Date Time			
+01.01.2009 00:10:00	996.52	-8.02	1307.75
+01.01.2009 00:20:00	996.57	-8.41	1309.80
+01.01.2009 00:30:00	996.53	-8.51	1310.24
+01.01.2009 00:40:00	996.51	-8.31	1309.19
+01.01.2009 00:50:00	996.51	-8.27	1309.00
 ```
 
 ## Plot to observe how the features change over time
 
-
+![Plot to observe how the features change over time](https://user-images.githubusercontent.com/70437668/141438719-3659f6c3-c286-43b9-96c0-38c490bbfcd2.jpg)
 
 Similarly as above, I will scale the data first.
 
 The method is the same but I have many features here so I will need a parameter - axis.
 
+```
+dataset = features.values
+data_mean = dataset[:TRAIN_SPLIT].mean(axis=0)
+data_std = dataset[:TRAIN_SPLIT].std(axis=0)
+dataset = (dataset-data_mean)/data_std
+```
+
+```
+dataset.shape
+(420551, 3)
+```
 
 ## Prediction model of a new temperature point
 
@@ -444,6 +472,12 @@ _________________________________________________________________
 
 ### Plot train history
 
-
+![Learning Curve for Deep LSTM model](https://user-images.githubusercontent.com/70437668/141439226-a132cd6d-889f-4220-a244-25640f0385f9.jpg)
 
 ### Predict and draw a prediction line chart
+
+![Prediction 1](https://user-images.githubusercontent.com/70437668/141439258-9f996682-c084-4706-bc1e-f20e01215e4c.jpg)
+
+![Prediction 2](https://user-images.githubusercontent.com/70437668/141439268-510ff20e-5c7d-4a1d-af1c-38dbf1bb002b.jpg)
+
+![Prediction 3](https://user-images.githubusercontent.com/70437668/141439289-da5032cb-b6e4-4e56-afeb-1d11537e7f2f.jpg)
